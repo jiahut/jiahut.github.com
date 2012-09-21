@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[与人分享自己的一切才是最大的快乐]]></title>
+  <title><![CDATA[jazz's blog]]></title>
   <link href="http://jiahut.github.com/atom.xml" rel="self"/>
   <link href="http://jiahut.github.com/"/>
-  <updated>2012-09-21T00:27:09+08:00</updated>
+  <updated>2012-09-21T23:02:51+08:00</updated>
   <id>http://jiahut.github.com/</id>
   <author>
     <name><![CDATA[zhijia,.zhang]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MarkDown:Syntax]]></title>
+    <link href="http://jiahut.github.com/blog/2012/09/21/markdown-syntax/"/>
+    <updated>2012-09-21T21:59:00+08:00</updated>
+    <id>http://jiahut.github.com/blog/2012/09/21/markdown-syntax</id>
+    <content type="html"><![CDATA[<h3>记录一下Markdown的语法要点</h3>
+
+<p>============================</p>
+
+<ul>
+<li><p>MD的语法全部由标点符号所组成,一般语法格式为标点符号加至少一个空格或tab</p></li>
+<li><p>MD设计用于网络写作语言</p></li>
+<li><p>不在Markdown涵盖范围之外的标签，都可以直接在文件里面用HTML撰写
+只有<strong>区块元素</strong>──比如<code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code>标签，必需在前后加上空白
+HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cite&gt;</code>、<code>&lt;del&gt;</code>则不受限制</p></li>
+<li><p>Markdown语法在HTML<strong>区块标签</strong>中将不会被进行处理</p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[just test]]></title>
