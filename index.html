@@ -9,10 +9,7 @@
   <meta name="author" content="zhijia,.zhang">
 
   
-  <meta name="description" content="记录一下Markdown的语法要点 ============================ MD的语法全部由标点符号所组成,一般语法格式为标点符号加至少一个空格或tab
-MD设计用于网络写作语言
-不在Markdown涵盖范围之外的标签，都可以直接在文件里面用HTML撰写
-只有区块元素──比如& &hellip;">
+  <meta name="description" content="python笔记 模块 vs. 包 一个.py文件就是一个模块，但是一个模块未必就对应一个.py文件 in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -40,8 +37,6 @@ MD设计用于网络写作语言
   <header role="banner"><hgroup>
   <h1><a href="/">jazz's blog</a></h1>
   
-    <h2>where there's a will, there's a way</h2>
-  
 </hgroup>
 
 </header>
@@ -67,6 +62,79 @@ MD设计用于网络写作语言
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/10/28/python-module-vs-package/">Python Module vs. Package</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-28T10:47:00+08:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>python笔记</h1>
+
+<h2>模块 vs. 包</h2>
+
+<ol>
+<li>一个.py文件就是一个模块，但是一个模块未必就对应一个.py文件
+
+<ol>
+<li>in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217;re able to do &#8220;import os.path&#8221; as though it was a submodule.</li>
+<li>sys.modules is a dict in which modules are cached. When you import a module, if it already has been imported somewhere, it gets the instance stored in sys.modules.</li>
+</ol>
+</li>
+<li>包就是一个文件夹下放一个 &#8220;_<em>init_</em>.py&#8221;
+
+<ol>
+<li>The _init.py files are required to make Python treat the directories as containing packages.</li>
+<li>_<em>init_</em>.py can just be an empty file, but it can also execute initialization code for the package or set the _<em>all_</em> variable</li>
+<li>多级package _<em>init_</em>.py从顶至底依次被执行</li>
+</ol>
+</li>
+<li>import用于导入包或模块
+
+<ol>
+<li>A module&#8217;s body executes immediately the first time the module is imported in a given run of a program</li>
+<li>An import statement creates a new namespace containing all the attributes of the module</li>
+</ol>
+</li>
+</ol>
+
+
+<h2>获取帮助</h2>
+
+<ol>
+<li>dir(object) => 列出object的方法</li>
+<li>help(object) => 列出object的文档<br/>
+*object 可以是模块,类 或者 函数对象。</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -163,6 +231,10 @@ HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cit
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/28/python-module-vs-package/">Python module vs. package</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/09/21/markdown-syntax/">MarkDown:Syntax</a>

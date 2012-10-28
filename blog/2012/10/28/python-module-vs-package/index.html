@@ -5,14 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>MarkDown:Syntax - jazz's blog</title>
+  <title>Python module vs. package - jazz's blog</title>
   <meta name="author" content="zhijia,.zhang">
 
   
-  <meta name="description" content="记录一下Markdown的语法要点 ============================ MD的语法全部由标点符号所组成,一般语法格式为标点符号加至少一个空格或tab
-MD设计用于网络写作语言
-不在Markdown涵盖范围之外的标签，都可以直接在文件里面用HTML撰写
-只有区块元素──比如& &hellip;">
+  <meta name="description" content="python笔记 模块 vs. 包 一个.py文件就是一个模块，但是一个模块未必就对应一个.py文件 in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +18,7 @@ MD设计用于网络写作语言
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jiahut.github.com/blog/2012/09/21/markdown-syntax/">
+  <link rel="canonical" href="http://jiahut.github.com/blog/2012/10/28/python-module-vs-package/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,7 +65,7 @@ MD设计用于网络写作语言
   
   <header>
     
-      <h1 class="entry-title">MarkDown:Syntax</h1>
+      <h1 class="entry-title">Python Module vs. Package</h1>
     
     
       <p class="meta">
@@ -84,25 +81,50 @@ MD设计用于网络写作语言
   
 
 
-<time datetime="2012-09-21T21:59:00+08:00" pubdate data-updated="true">Sep 21<span>st</span>, 2012</time>
+<time datetime="2012-10-28T10:47:00+08:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h3>记录一下Markdown的语法要点</h3>
+<div class="entry-content"><h1>python笔记</h1>
 
-<p>============================</p>
+<h2>模块 vs. 包</h2>
 
-<ul>
-<li><p>MD的语法全部由标点符号所组成,一般语法格式为标点符号加至少一个空格或tab</p></li>
-<li><p>MD设计用于网络写作语言</p></li>
-<li><p>不在Markdown涵盖范围之外的标签，都可以直接在文件里面用HTML撰写
-只有<strong>区块元素</strong>──比如<code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code>标签，必需在前后加上空白
-HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cite&gt;</code>、<code>&lt;del&gt;</code>则不受限制</p></li>
-<li><p>Markdown语法在HTML<strong>区块标签</strong>中将不会被进行处理</p></li>
-</ul>
+<ol>
+<li>一个.py文件就是一个模块，但是一个模块未必就对应一个.py文件
+
+<ol>
+<li>in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217;re able to do &#8220;import os.path&#8221; as though it was a submodule.</li>
+<li>sys.modules is a dict in which modules are cached. When you import a module, if it already has been imported somewhere, it gets the instance stored in sys.modules.</li>
+</ol>
+</li>
+<li>包就是一个文件夹下放一个 &#8220;_<em>init_</em>.py&#8221;
+
+<ol>
+<li>The _init.py files are required to make Python treat the directories as containing packages.</li>
+<li>_<em>init_</em>.py can just be an empty file, but it can also execute initialization code for the package or set the _<em>all_</em> variable</li>
+<li>多级package _<em>init_</em>.py从顶至底依次被执行</li>
+</ol>
+</li>
+<li>import用于导入包或模块
+
+<ol>
+<li>A module&#8217;s body executes immediately the first time the module is imported in a given run of a program</li>
+<li>An import statement creates a new namespace containing all the attributes of the module</li>
+</ol>
+</li>
+</ol>
+
+
+<h2>获取帮助</h2>
+
+<ol>
+<li>dir(object) => 列出object的方法</li>
+<li>help(object) => 列出object的文档<br/>
+*object 可以是模块,类 或者 函数对象。</li>
+</ol>
 
 </div>
 
@@ -126,7 +148,7 @@ HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cit
   
 
 
-<time datetime="2012-09-21T21:59:00+08:00" pubdate data-updated="true">Sep 21<span>st</span>, 2012</time>
+<time datetime="2012-10-28T10:47:00+08:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time>
       
 
 
@@ -134,7 +156,7 @@ HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cit
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jiahut.github.com/blog/2012/09/21/markdown-syntax/" data-via="" data-counturl="http://jiahut.github.com/blog/2012/09/21/markdown-syntax/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jiahut.github.com/blog/2012/10/28/python-module-vs-package/" data-via="" data-counturl="http://jiahut.github.com/blog/2012/10/28/python-module-vs-package/" >Tweet</a>
   
   
   
@@ -143,10 +165,8 @@ HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cit
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/09/20/just-test/" title="Previous Post: just test">&laquo; just test</a>
+        <a class="basic-alignment left" href="/blog/2012/09/21/markdown-syntax/" title="Previous Post: MarkDown:Syntax">&laquo; MarkDown:Syntax</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/10/28/python-module-vs-package/" title="Next Post: Python module vs. package">Python module vs. package &raquo;</a>
       
     </p>
   </footer>
