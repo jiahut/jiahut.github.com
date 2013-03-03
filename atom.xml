@@ -4,7 +4,7 @@
   <title><![CDATA[jazz's blog]]></title>
   <link href="http://jiahut.github.com/atom.xml" rel="self"/>
   <link href="http://jiahut.github.com/"/>
-  <updated>2012-10-28T11:21:28+08:00</updated>
+  <updated>2013-03-03T14:05:37+08:00</updated>
   <id>http://jiahut.github.com/</id>
   <author>
     <name><![CDATA[zhijia,.zhang]]></name>
@@ -14,29 +14,113 @@
 
   
   <entry>
+    <title type="html"><![CDATA[javascript core]]></title>
+    <link href="http://jiahut.github.com/blog/2013/03/03/javascript-core/"/>
+    <updated>2013-03-03T13:27:00+08:00</updated>
+    <id>http://jiahut.github.com/blog/2013/03/03/javascript-core</id>
+    <content type="html"><![CDATA[<h3>javascriptºËĞÄ</h3>
+
+<ol>
+<li>Á½¸ö×÷ÓÃÓò
+
+<ul>
+<li>È«¾Ö×÷ÓÃÓò</li>
+<li>±Õ°ü×÷ÓÃÓò
+
+<blockquote><p>for(var i = 1;i &lt; 100;i++); iÌÓÒİµ½È«¾Ö×÷ÓÃÓòÖĞ<br/>
+console.log(i); //100</p></blockquote></li>
+</ul>
+</li>
+<li>Á½ÌõÔ­ĞÍÁ´
+
+<ul>
+<li><em>function</em>.prototype</li>
+<li><em>object</em>.constructor</li>
+</ul>
+</li>
+<li>Á½¸öÉÏÏÂÎÄ
+
+<ul>
+<li>¶¨ÒåÉÏÏÂÎÄ</li>
+<li>Ö´ĞĞÉÏÏÂÎÄ</li>
+</ul>
+
+
+<p> &#8220;`js</p>
+
+<pre><code> (function(){
+     var callbacks = [];
+     for(var i = 1;i &lt; 100;i++){
+         callbacks.push(function(){
+             console.log(i)
+         });
+     }
+     callbacks.forEach(function(e){
+         e.apply()
+     });
+ })()
+</code></pre>
+
+<p> &#8220;`</p></li>
+<li>Á½Ì×ÀàĞÍÏµÍ³
+
+<ul>
+<li>»ù±¾ÀàĞÍÏµÍ³¿ÕµÄ¸ÅÄîÓÃ undefined ±íÊ¾</li>
+<li>¶ÔÏóÀàĞÍÏµÍ³¿ÕµÄ¸ÅÄîÓÃ null ±íÊ¾
+
+<blockquote><p>var str = &#8220;&#8221;<br/>
+typeof str === &#8216;string&#8217; //true<br/>
+str instanceof String // false</p></blockquote></li>
+</ul>
+</li>
+<li>Á½¸öºËĞÄ¸ÅÄî
+
+<ul>
+<li><p>±Õ°ü¾ÍÊÇĞ¯´ø²¿·ÖÉÏÏÂÎÄµÄº¯Êı¶ÔÏó</p>
+
+<ul>
+<li>ÄÚ²¿º¯ÊıÖĞµÄ±äÁ¿ÓÅÏÈÔÚ±Õ°üÖĞÖ´ĞĞ±äÁ¿²éÕÒ£¬È»ºóÉÏÒ»´Î&#8230;</li>
+</ul>
+</li>
+<li><p>ÉÏÏÂÎÄ¶ÔÏó¾ÍÊÇº¯ÊıÖ´ĞĞµÄ»·¾³</p>
+
+<ul>
+<li>µ±Ç°ÉÏÏÂÎÄÎªthis</li>
+<li>ä¯ÀÀÆ÷È«¾ÖÉÏÏÂÎÄÎªwindows</li>
+<li>nodejsÈ«¾ÖÉÏÏÂÎÄÎªglobal</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Python module vs. package]]></title>
     <link href="http://jiahut.github.com/blog/2012/10/28/python-module-vs-package/"/>
     <updated>2012-10-28T10:47:00+08:00</updated>
     <id>http://jiahut.github.com/blog/2012/10/28/python-module-vs-package</id>
-    <content type="html"><![CDATA[<h2>æ¨¡å— vs. åŒ…</h2>
+    <content type="html"><![CDATA[<h2>Ä£¿é vs. °ü</h2>
 
 <ol>
-<li>ä¸€ä¸ª.pyæ–‡ä»¶å°±æ˜¯ä¸€ä¸ªæ¨¡å—ï¼Œä½†æ˜¯ä¸€ä¸ªæ¨¡å—æœªå¿…å°±å¯¹åº”ä¸€ä¸ª.pyæ–‡ä»¶
+<li>Ò»¸ö.pyÎÄ¼ş¾ÍÊÇÒ»¸öÄ£¿é£¬µ«ÊÇÒ»¸öÄ£¿éÎ´±Ø¾Í¶ÔÓ¦Ò»¸ö.pyÎÄ¼ş
 
 <ol>
 <li>in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217;re able to do &#8220;import os.path&#8221; as though it was a submodule.</li>
 <li>sys.modules is a dict in which modules are cached. When you import a module, if it already has been imported somewhere, it gets the instance stored in sys.modules.</li>
 </ol>
 </li>
-<li>åŒ…å°±æ˜¯ä¸€ä¸ªæ–‡ä»¶å¤¹ä¸‹æ”¾ä¸€ä¸ª &#8220;_<em>init_</em>.py&#8221;
+<li>°ü¾ÍÊÇÒ»¸öÎÄ¼ş¼ĞÏÂ·ÅÒ»¸ö &#8220;_<em>init_</em>.py&#8221;
 
 <ol>
 <li>The _init.py files are required to make Python treat the directories as containing packages.</li>
 <li>_<em>init_</em>.py can just be an empty file, but it can also execute initialization code for the package or set the _<em>all_</em> variable</li>
-<li>å¤šçº§package _<em>init_</em>.pyä»é¡¶è‡³åº•ä¾æ¬¡è¢«æ‰§è¡Œ</li>
+<li>¶à¼¶package _<em>init_</em>.py´Ó¶¥ÖÁµ×ÒÀ´Î±»Ö´ĞĞ</li>
 </ol>
 </li>
-<li>importç”¨äºå¯¼å…¥åŒ…æˆ–æ¨¡å—
+<li>importÓÃÓÚµ¼Èë°ü»òÄ£¿é
 
 <ol>
 <li>A module&#8217;s body executes immediately the first time the module is imported in a given run of a program</li>
@@ -46,12 +130,12 @@
 </ol>
 
 
-<h2>è·å–å¸®åŠ©</h2>
+<h2>»ñÈ¡°ïÖú</h2>
 
 <ol>
-<li>dir(object) => åˆ—å‡ºobjectçš„æ–¹æ³•</li>
-<li>help(object) => åˆ—å‡ºobjectçš„æ–‡æ¡£<br/>
-*object å¯ä»¥æ˜¯æ¨¡å—,ç±» æˆ–è€… å‡½æ•°å¯¹è±¡ã€‚</li>
+<li>dir(object) => ÁĞ³öobjectµÄ·½·¨</li>
+<li>help(object) => ÁĞ³öobjectµÄÎÄµµ<br/>
+*object ¿ÉÒÔÊÇÄ£¿é,Àà »òÕß º¯Êı¶ÔÏó¡£</li>
 </ol>
 
 ]]></content>
@@ -62,17 +146,17 @@
     <link href="http://jiahut.github.com/blog/2012/09/21/markdown-syntax/"/>
     <updated>2012-09-21T21:59:00+08:00</updated>
     <id>http://jiahut.github.com/blog/2012/09/21/markdown-syntax</id>
-    <content type="html"><![CDATA[<h3>è®°å½•ä¸€ä¸‹Markdownçš„è¯­æ³•è¦ç‚¹</h3>
+    <content type="html"><![CDATA[<h3>¼ÇÂ¼Ò»ÏÂMarkdownµÄÓï·¨Òªµã</h3>
 
 <p>============================</p>
 
 <ul>
-<li><p>MDçš„è¯­æ³•å…¨éƒ¨ç”±æ ‡ç‚¹ç¬¦å·æ‰€ç»„æˆ,ä¸€èˆ¬è¯­æ³•æ ¼å¼ä¸ºæ ‡ç‚¹ç¬¦å·åŠ è‡³å°‘ä¸€ä¸ªç©ºæ ¼æˆ–tab</p></li>
-<li><p>MDè®¾è®¡ç”¨äºç½‘ç»œå†™ä½œè¯­è¨€</p></li>
-<li><p>ä¸åœ¨Markdownæ¶µç›–èŒƒå›´ä¹‹å¤–çš„æ ‡ç­¾ï¼Œéƒ½å¯ä»¥ç›´æ¥åœ¨æ–‡ä»¶é‡Œé¢ç”¨HTMLæ’°å†™
-åªæœ‰<strong>åŒºå—å…ƒç´ </strong>â”€â”€æ¯”å¦‚<code>&lt;div&gt;</code>ã€<code>&lt;table&gt;</code>ã€<code>&lt;pre&gt;</code>ã€<code>&lt;p&gt;</code>æ ‡ç­¾ï¼Œå¿…éœ€åœ¨å‰ååŠ ä¸Šç©ºç™½
-HTMLçš„<strong>åŒºæ®µæ ‡ç­¾</strong>å¦‚<code>&lt;span&gt;</code>ã€<code>&lt;cite&gt;</code>ã€<code>&lt;del&gt;</code>åˆ™ä¸å—é™åˆ¶</p></li>
-<li><p>Markdownè¯­æ³•åœ¨HTML<strong>åŒºå—æ ‡ç­¾</strong>ä¸­å°†ä¸ä¼šè¢«è¿›è¡Œå¤„ç†</p></li>
+<li><p>MDµÄÓï·¨È«²¿ÓÉ±êµã·ûºÅËù×é³É,Ò»°ãÓï·¨¸ñÊ½Îª±êµã·ûºÅ¼ÓÖÁÉÙÒ»¸ö¿Õ¸ñ»òtab</p></li>
+<li><p>MDÉè¼ÆÓÃÓÚÍøÂçĞ´×÷ÓïÑÔ</p></li>
+<li><p>²»ÔÚMarkdownº­¸Ç·¶Î§Ö®ÍâµÄ±êÇ©£¬¶¼¿ÉÒÔÖ±½ÓÔÚÎÄ¼şÀïÃæÓÃHTML×«Ğ´
+Ö»ÓĞ<strong>Çø¿éÔªËØ</strong>©¤©¤±ÈÈç<code>&lt;div&gt;</code>¡¢<code>&lt;table&gt;</code>¡¢<code>&lt;pre&gt;</code>¡¢<code>&lt;p&gt;</code>±êÇ©£¬±ØĞèÔÚÇ°ºó¼ÓÉÏ¿Õ°×
+HTMLµÄ<strong>Çø¶Î±êÇ©</strong>Èç<code>&lt;span&gt;</code>¡¢<code>&lt;cite&gt;</code>¡¢<code>&lt;del&gt;</code>Ôò²»ÊÜÏŞÖÆ</p></li>
+<li><p>MarkdownÓï·¨ÔÚHTML<strong>Çø¿é±êÇ©</strong>ÖĞ½«²»»á±»½øĞĞ´¦Àí</p></li>
 </ul>
 
 ]]></content>

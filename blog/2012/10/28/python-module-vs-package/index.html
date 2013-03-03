@@ -9,7 +9,7 @@
   <meta name="author" content="zhijia,.zhang">
 
   
-  <meta name="description" content="æ¨¡å— vs. åŒ… ä¸€ä¸ª.pyæ–‡ä»¶å°±æ˜¯ä¸€ä¸ªæ¨¡å—ï¼Œä½†æ˜¯ä¸€ä¸ªæ¨¡å—æœªå¿…å°±å¯¹åº”ä¸€ä¸ª.pyæ–‡ä»¶ in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217;re able &hellip;">
+  <meta name="description" content="Ä£¿é vs. °ü Ò»¸ö.pyÎÄ¼ş¾ÍÊÇÒ»¸öÄ£¿é£¬µ«ÊÇÒ»¸öÄ£¿éÎ´±Ø¾Í¶ÔÓ¦Ò»¸ö.pyÎÄ¼ş in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217;re able &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -88,25 +88,25 @@
   </header>
 
 
-<div class="entry-content"><h2>æ¨¡å— vs. åŒ…</h2>
+<div class="entry-content"><h2>Ä£¿é vs. °ü</h2>
 
 <ol>
-<li>ä¸€ä¸ª.pyæ–‡ä»¶å°±æ˜¯ä¸€ä¸ªæ¨¡å—ï¼Œä½†æ˜¯ä¸€ä¸ªæ¨¡å—æœªå¿…å°±å¯¹åº”ä¸€ä¸ª.pyæ–‡ä»¶
+<li>Ò»¸ö.pyÎÄ¼ş¾ÍÊÇÒ»¸öÄ£¿é£¬µ«ÊÇÒ»¸öÄ£¿éÎ´±Ø¾Í¶ÔÓ¦Ò»¸ö.pyÎÄ¼ş
 
 <ol>
 <li>in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217;re able to do &#8220;import os.path&#8221; as though it was a submodule.</li>
 <li>sys.modules is a dict in which modules are cached. When you import a module, if it already has been imported somewhere, it gets the instance stored in sys.modules.</li>
 </ol>
 </li>
-<li>åŒ…å°±æ˜¯ä¸€ä¸ªæ–‡ä»¶å¤¹ä¸‹æ”¾ä¸€ä¸ª &#8220;_<em>init_</em>.py&#8221;
+<li>°ü¾ÍÊÇÒ»¸öÎÄ¼ş¼ĞÏÂ·ÅÒ»¸ö &#8220;_<em>init_</em>.py&#8221;
 
 <ol>
 <li>The _init.py files are required to make Python treat the directories as containing packages.</li>
 <li>_<em>init_</em>.py can just be an empty file, but it can also execute initialization code for the package or set the _<em>all_</em> variable</li>
-<li>å¤šçº§package _<em>init_</em>.pyä»é¡¶è‡³åº•ä¾æ¬¡è¢«æ‰§è¡Œ</li>
+<li>¶à¼¶package _<em>init_</em>.py´Ó¶¥ÖÁµ×ÒÀ´Î±»Ö´ĞĞ</li>
 </ol>
 </li>
-<li>importç”¨äºå¯¼å…¥åŒ…æˆ–æ¨¡å—
+<li>importÓÃÓÚµ¼Èë°ü»òÄ£¿é
 
 <ol>
 <li>A module&#8217;s body executes immediately the first time the module is imported in a given run of a program</li>
@@ -116,12 +116,12 @@
 </ol>
 
 
-<h2>è·å–å¸®åŠ©</h2>
+<h2>»ñÈ¡°ïÖú</h2>
 
 <ol>
-<li>dir(object) => åˆ—å‡ºobjectçš„æ–¹æ³•</li>
-<li>help(object) => åˆ—å‡ºobjectçš„æ–‡æ¡£<br/>
-*object å¯ä»¥æ˜¯æ¨¡å—,ç±» æˆ–è€… å‡½æ•°å¯¹è±¡ã€‚</li>
+<li>dir(object) => ÁĞ³öobjectµÄ·½·¨</li>
+<li>help(object) => ÁĞ³öobjectµÄÎÄµµ<br/>
+*object ¿ÉÒÔÊÇÄ£¿é,Àà »òÕß º¯Êı¶ÔÏó¡£</li>
 </ol>
 
 </div>
@@ -166,6 +166,8 @@
         <a class="basic-alignment left" href="/blog/2012/09/21/markdown-syntax/" title="Previous Post: MarkDown:Syntax">&laquo; MarkDown:Syntax</a>
       
       
+        <a class="basic-alignment right" href="/blog/2013/03/03/javascript-core/" title="Next Post: javascript core">javascript core &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -177,6 +179,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/03/03/javascript-core/">javascript core</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/10/28/python-module-vs-package/">Python module vs. package</a>
@@ -205,7 +211,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2012 - zhijia,.zhang -
+  Copyright &copy; 2013 - zhijia,.zhang -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
