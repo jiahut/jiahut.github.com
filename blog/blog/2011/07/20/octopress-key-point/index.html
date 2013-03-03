@@ -1,0 +1,44 @@
+<p>﻿&#8212;
+layout: post
+title: &#8220;octopress key point&#8221;
+date: 2011-07-20 23:09
+comments: true</p>
+
+<h2>categories: </h2>
+
+<h2>使用octopress的一下关键性要点</h2>
+
+<h3>创建文章别忘记备份源文件</h3>
+
+<ol>
+<li><p>bundle exec rake new_post[&#8216;title&#8217;]</p>
+
+<ul>
+<li>title里大可以包含空格</li>
+</ul>
+</li>
+<li><p>git add  source/_post/new_post</p></li>
+<li><p>git commit -m &#8220;update source : new_post&#8221;</p></li>
+</ol>
+
+
+<h3>win下deploy的一些关键性细节</h3>
+
+<ol>
+<li><p>set LC_ALL=zh_CN.UTF-8</p>
+
+<ul>
+<li>多少次跌在这个坑里，win的默认使用gbk编码，console显示的也是gbk编码</li>
+</ul>
+</li>
+<li><p>bundle exec rake generate</p></li>
+<li><p>bundle exec rake deploy</p></li>
+</ol>
+
+
+<h3>更新系统享受新特性或者fix bug</h3>
+
+<ol>
+<li>git pull octopress master</li>
+</ol>
+
