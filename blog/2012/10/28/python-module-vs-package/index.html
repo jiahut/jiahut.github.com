@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Python module vs. package - jazz's blog</title>
+  <meta name="author" content="zhijia,.zhang">
+
+  
+  <meta name="description" content="模块 vs. 包 一个.py文件就是一个模块，但是一个模块未必就对应一个.py文件 in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217;re able &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jiahut.github.com/blog/2012/10/28/python-module-vs-package/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/blog/atom.xml" rel="alternate" title="jazz's blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">jazz's blog</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Python Module vs. Package</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-28T10:47:00+08:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>模块 vs. 包</h2>
+
+<ol>
+<li>一个.py文件就是一个模块，但是一个模块未必就对应一个.py文件
+
+<ol>
+<li>in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217;re able to do &#8220;import os.path&#8221; as though it was a submodule.</li>
+<li>sys.modules is a dict in which modules are cached. When you import a module, if it already has been imported somewhere, it gets the instance stored in sys.modules.</li>
+</ol>
+</li>
+<li>包就是一个文件夹下放一个 &#8220;_<em>init_</em>.py&#8221;
+
+<ol>
+<li>The _init.py files are required to make Python treat the directories as containing packages.</li>
+<li>_<em>init_</em>.py can just be an empty file, but it can also execute initialization code for the package or set the _<em>all_</em> variable</li>
+<li>多级package _<em>init_</em>.py从顶至底依次被执行</li>
+</ol>
+</li>
+<li>import用于导入包或模块
+
+<ol>
+<li>A module&#8217;s body executes immediately the first time the module is imported in a given run of a program</li>
+<li>An import statement creates a new namespace containing all the attributes of the module</li>
+</ol>
+</li>
+</ol>
+
+
+<h2>获取帮助</h2>
+
+<ol>
+<li>dir(object) => 列出object的方法</li>
+<li>help(object) => 列出object的文档<br/>
+*object 可以是模块,类 或者 函数对象</li>
+</ol>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">zhijia,.zhang</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-28T10:47:00+08:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jiahut.github.com/blog/2012/10/28/python-module-vs-package/" data-via="" data-counturl="http://jiahut.github.com/blog/2012/10/28/python-module-vs-package/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/09/21/markdown-syntax/" title="Previous Post: MarkDown:Syntax">&laquo; MarkDown:Syntax</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/03/03/javascript-core/" title="Next Post: javascript core">javascript core &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/03/03/javascript-core/">javascript core</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/28/python-module-vs-package/">Python module vs. package</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/21/markdown-syntax/">MarkDown:Syntax</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/20/octopress-key-point/">octopress key point</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - zhijia,.zhang -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
