@@ -4,7 +4,7 @@
   <title><![CDATA[jazz's blog]]></title>
   <link href="http://jiahut.github.com/atom.xml" rel="self"/>
   <link href="http://jiahut.github.com/"/>
-  <updated>2013-03-03T17:01:09+08:00</updated>
+  <updated>2013-03-05T22:54:27+08:00</updated>
   <id>http://jiahut.github.com/</id>
   <author>
     <name><![CDATA[zhijia,.zhang]]></name>
@@ -114,6 +114,140 @@
 </ul>
 </li>
 </ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ruby as script in action]]></title>
+    <link href="http://jiahut.github.com/blog/2012/12/05/ruby-as-script-in-action/"/>
+    <updated>2012-12-05T22:14:00+08:00</updated>
+    <id>http://jiahut.github.com/blog/2012/12/05/ruby-as-script-in-action</id>
+    <content type="html"><![CDATA[<h3>基于ruby脚本的一些最佳实践</h3>
+
+<ul>
+<li>入口
+
+<ul>
+<li>可选：拥有一个main.rb 文件，作为项目的入口文件</li>
+<li>执行起点：</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="k">if</span> <span class="nx">__FILE__</span> <span class="o">==</span> <span class="nx">$0</span> <span class="err">#</span> <span class="nx">alias</span> <span class="nx">$PROGRAM_NAME</span>
+</span><span class='line'>    <span class="err">#</span> <span class="nx">main</span> <span class="nx">point</span>
+</span><span class='line'>  <span class="nx">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>加载路径
+
+<ul>
+<li>将当前路径加入ruby的load_path中,以便查找到下面的模块或模型</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">$LOAD_PATH</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">__FILE__</span><span class="p">)))</span>
+</span><span class='line'>    <span class="nx">unless</span> <span class="nx">$LOAD_PATH</span><span class="p">.</span><span class="nx">include</span><span class="o">?</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">__FILE__</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>配置文件
+
+<ul>
+<li>使用ymal作为配置文件,使用<code>yaml</code>模块来读取</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">config</span> <span class="o">=</span> <span class="nx">YAML</span><span class="p">.</span><span class="nx">load_file</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">__FILE__</span><span class="p">),</span> <span class="nx">CONFIG_FILE</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<ul>
+<li>命令行参数
+
+<ul>
+<li>使用<code>optparse</code>模块处理命令行参数</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="nx">OptionParser</span><span class="p">.</span><span class="k">new</span> <span class="k">do</span> <span class="o">|</span><span class="nx">opts</span><span class="o">|</span>
+</span><span class='line'>      <span class="err">#</span> <span class="nx">options</span><span class="p">[</span><span class="o">:</span><span class="nx">action</span><span class="p">]</span> <span class="o">=</span> <span class="nx">args</span>
+</span><span class='line'>    <span class="nx">opts</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;--open [project_name]&quot;</span><span class="p">,</span><span class="s2">&quot;open a sublime projec&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="nx">project_info</span><span class="o">|</span>
+</span><span class='line'>      <span class="nx">options</span><span class="p">[</span><span class="o">:</span><span class="nx">open</span><span class="p">]</span> <span class="o">=</span> <span class="nx">project_info</span>
+</span><span class='line'>    <span class="nx">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">opts</span><span class="p">.</span><span class="nx">on_tail</span><span class="p">(</span><span class="s2">&quot;-h&quot;</span><span class="p">,</span> <span class="s2">&quot;--help&quot;</span><span class="p">,</span> <span class="s2">&quot;Show this message&quot;</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>      <span class="nx">puts</span> <span class="nx">opts</span>
+</span><span class='line'>      <span class="nx">exit</span>
+</span><span class='line'>    <span class="nx">end</span>
+</span><span class='line'>  <span class="nx">end</span><span class="p">.</span><span class="nx">parse</span><span class="o">!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="nx">options</span><span class="p">.</span><span class="nx">each</span> <span class="k">do</span> <span class="o">|</span><span class="nx">action</span> <span class="p">,</span> <span class="nx">argv</span><span class="o">|</span>
+</span><span class='line'>    <span class="nx">SublProject</span><span class="p">.</span><span class="nx">send</span> <span class="nx">action</span><span class="p">.</span><span class="nx">to_sym</span><span class="p">,</span><span class="o">*</span><span class="nx">argv</span>
+</span><span class='line'>  <span class="nx">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>模块</p>
+
+<ul>
+<li>一个模块只应该解决一个核心问题。比如解析特定格式的文件，返回解析后的模型数据
+
+<ul>
+<li>可选： 以功能命名相应的文件夹，如parser</li>
+</ul>
+</li>
+<li>模块的接口设计为返回一个模型的实例</li>
+</ul>
+</li>
+<li><p>模型</p>
+
+<ul>
+<li>项目需求分析阶段，抽象出的核心概念都应该作为一个模型</li>
+<li>模型应该采用rails的充血模型设计，模型之间能导航，但不需持久化</li>
+<li>当代码在响应需求变化时显得复杂，这时候应该抽象出一个模型，在业务中插入一个对象来应对业务的变化。</li>
+<li>可选：把所有模型保存到domain或models文件夹中</li>
+</ul>
+</li>
+</ul>
 
 ]]></content>
   </entry>

@@ -5,16 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>jazz's blog</title>
+  <title>ruby as script in action - jazz's blog</title>
   <meta name="author" content="zhijia,.zhang">
 
   
-  <meta name="description" content="javascript核心 两个作用域 全局作用域
-闭包作用域 1
+  <meta name="description" content="基于ruby脚本的一些最佳实践 入口 可选：拥有一个main.rb 文件，作为项目的入口文件
+执行起点： 1
 2
-for(var i = 1;i &lt; 100;i++); i逃逸到全局作用域中
-console.log(i); //100 两条原型链 function.prototype
-object.constructor 两个上下文 &hellip;">
+3 if __FILE__ == $0 # alias $PROGRAM_NAME # main point end 加载路径 将当前路径加入ruby的load_path中, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,7 +21,7 @@ object.constructor 两个上下文 &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jiahut.github.com/">
+  <link rel="canonical" href="http://jiahut.github.com/blog/2012/12/05/ruby-as-script-in-action/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -58,147 +56,12 @@ object.constructor 两个上下文 &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/03/03/javascript-core/">Javascript Core</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-03T13:27:00+08:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>javascript核心</h3>
-
-<ol>
-<li>两个作用域
-
-<ul>
-<li>全局作用域</li>
-<li>闭包作用域</li>
-</ul>
-</li>
-</ol>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">);</span> <span class="nx">i</span><span class="err">逃逸到全局作用域中</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span> <span class="c1">//100</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>两条原型链
-
-<ul>
-<li><em>function</em>.prototype</li>
-<li><em>object</em>.constructor</li>
-</ul>
-</li>
-<li>两个上下文
-
-<ul>
-<li>定义上下文</li>
-<li>执行上下文</li>
-</ul>
-</li>
-</ol>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">callbacks</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-</span><span class='line'>      <span class="nx">callbacks</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">});</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">callbacks</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-</span><span class='line'>      <span class="nx">e</span><span class="p">.</span><span class="nx">apply</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'><span class="p">})()</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>两套类型系统
-
-<ul>
-<li>基本类型系统空的概念用 undefined 表示</li>
-<li>对象类型系统空的概念用 null 表示
-<code>js
-   var str = ""  
-   typeof str === 'string' //true  
-   str instanceof String // false
-</code></li>
-</ul>
-</li>
-<li>两个核心概念
-
-<ul>
-<li>闭包就是携带部分上下文的函数对象
-
-<ul>
-<li>内部函数中的变量优先在闭包中执行变量查找，然后上一次&#8230;</li>
-</ul>
-</li>
-<li>上下文对象就是函数执行的环境
-
-<ul>
-<li>当前上下文为this</li>
-<li>浏览器全局上下文为windows</li>
-<li>nodejs全局上下文为global</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/05/ruby-as-script-in-action/">Ruby as Script in Action</a></h1>
+      <h1 class="entry-title">Ruby as Script in Action</h1>
     
     
       <p class="meta">
@@ -221,7 +84,7 @@ object.constructor 两个上下文 &hellip;">
   </header>
 
 
-  <div class="entry-content"><h3>基于ruby脚本的一些最佳实践</h3>
+<div class="entry-content"><h3>基于ruby脚本的一些最佳实践</h3>
 
 <ul>
 <li>入口
@@ -348,93 +211,16 @@ object.constructor 两个上下文 &hellip;">
 </ul>
 
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/28/python-module-vs-package/">Python Module vs. Package</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">zhijia,.zhang</span></span>
 
-<time datetime="2012-10-28T10:47:00+08:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>模块 vs. 包</h2>
-
-<ol>
-<li>一个.py文件就是一个模块，但是一个模块未必就对应一个.py文件
-
-<ol>
-<li>in lib/os.py it injects &#8220;sys.modules[&#8216;os.path&#8217;] = path&#8221; so that you&#8217;re able to do &#8220;import os.path&#8221; as though it was a submodule.</li>
-<li>sys.modules is a dict in which modules are cached. When you import a module, if it already has been imported somewhere, it gets the instance stored in sys.modules.</li>
-</ol>
-</li>
-<li>包就是一个文件夹下放一个 &#8220;_<em>init_</em>.py&#8221;
-
-<ol>
-<li>The _init.py files are required to make Python treat the directories as containing packages.</li>
-<li>_<em>init_</em>.py can just be an empty file, but it can also execute initialization code for the package or set the _<em>all_</em> variable</li>
-<li>多级package _<em>init_</em>.py从顶至底依次被执行</li>
-</ol>
-</li>
-<li>import用于导入包或模块
-
-<ol>
-<li>A module&#8217;s body executes immediately the first time the module is imported in a given run of a program</li>
-<li>An import statement creates a new namespace containing all the attributes of the module</li>
-</ol>
-</li>
-</ol>
-
-
-<h2>获取帮助</h2>
-
-<ol>
-<li>dir(object) => 列出object的方法</li>
-<li>help(object) => 列出object的文档<br/>
-*object 可以是模块,类 或者 函数对象</li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/21/markdown-syntax/">MarkDown:Syntax</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -446,115 +232,34 @@ object.constructor 两个上下文 &hellip;">
   
 
 
-<time datetime="2012-09-21T21:59:00+08:00" pubdate data-updated="true">Sep 21<span>st</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>记录一下Markdown的语法要点</h3>
-
-<p>============================</p>
-
-<ul>
-<li><p>MD的语法全部由标点符号所组成,一般语法格式为标点符号加至少一个空格或tab</p></li>
-<li><p>MD设计用于网络写作语言</p></li>
-<li><p>不在Markdown涵盖范围之外的标签，都可以直接在文件里面用HTML撰写
-只有<strong>区块元素</strong>──比如<code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code>标签，必需在前后加上空白
-HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cite&gt;</code>、<code>&lt;del&gt;</code>则不受限制</p></li>
-<li><p>Markdown语法在HTML<strong>区块标签</strong>中将不会被进行处理</p></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2012-12-05T22:14:00+08:00" pubdate data-updated="true">Dec 5<span>th</span>, 2012</time>
       
-  <header>
+
+
+    </p>
     
-      <h1 class="entry-title"><a href="/blog/2011/07/20/octopress-key-point/">Octopress Key Point</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
+      <div class="sharing">
   
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jiahut.github.com/blog/2012/12/05/ruby-as-script-in-action/" data-via="" data-counturl="http://jiahut.github.com/blog/2012/12/05/ruby-as-script-in-action/" >Tweet</a>
+  
+  
+  
+</div>
 
-
-<time datetime="2011-07-20T23:09:00+08:00" pubdate data-updated="true">Jul 20<span>th</span>, 2011</time>
-        
-      </p>
     
-  </header>
-
-
-  <div class="entry-content"><h2>使用octopress的一下关键性要点</h2>
-
-<h3>创建文章别忘记备份源文件</h3>
-
-<ol>
-<li><p>bundle exec rake new_post[&#8216;title&#8217;]</p>
-
-<ul>
-<li>title里大可以包含空格</li>
-</ul>
-</li>
-<li><p>git add  source/_post/new_post</p></li>
-<li><p>git commit -m &#8220;update source : new_post&#8221;</p></li>
-</ol>
-
-
-<h3>win下deploy的一些关键性细节</h3>
-
-<ol>
-<li><p>set LC_ALL=zh_CN.UTF-8</p>
-
-<ul>
-<li>多少次跌在这个坑里，win的默认使用gbk编码，console显示的也是gbk编码</li>
-</ul>
-</li>
-<li><p>bundle exec rake generate</p></li>
-<li><p>bundle exec rake deploy</p></li>
-</ol>
-
-
-<h3>生成的markdown文件请务必保证是utf-8无bom编码</h3>
-
-<pre><code>- 又何尝不是一个坑.
-</code></pre>
-
-<h3>更新系统享受新特性或者fix bug</h3>
-
-<ol>
-<li>git pull octopress master</li>
-</ol>
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/10/28/python-module-vs-package/" title="Previous Post: Python module vs. package">&laquo; Python module vs. package</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/03/03/javascript-core/" title="Next Post: javascript core">javascript core &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
 
 </div>
-  
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -591,6 +296,7 @@ HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cit
 
   
 </aside>
+
 
     </div>
   </div>
