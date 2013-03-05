@@ -91,7 +91,7 @@ object.constructor 两个上下文 &hellip;">
 
   <div class="entry-content"><h3>javascript核心</h3>
 
-<ol>
+<ul>
 <li>两个作用域
 
 <ul>
@@ -99,7 +99,7 @@ object.constructor 两个上下文 &hellip;">
 <li>闭包作用域</li>
 </ul>
 </li>
-</ol>
+</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -109,7 +109,7 @@ object.constructor 两个上下文 &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
+<ul>
 <li>两条原型链
 
 <ul>
@@ -124,7 +124,7 @@ object.constructor 两个上下文 &hellip;">
 <li>执行上下文</li>
 </ul>
 </li>
-</ol>
+</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -152,19 +152,29 @@ object.constructor 两个上下文 &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
+<ul>
 <li>两套类型系统
 
 <ul>
 <li>基本类型系统空的概念用 undefined 表示</li>
-<li>对象类型系统空的概念用 null 表示
-<code>js
-   var str = ""  
-   typeof str === 'string' //true  
-   str instanceof String // false
-</code></li>
+<li>对象类型系统空的概念用 null 表示</li>
 </ul>
 </li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="k">typeof</span> <span class="nx">str</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span> <span class="c1">//true  </span>
+</span><span class='line'><span class="nx">str</span> <span class="k">instanceof</span> <span class="nb">String</span> <span class="c1">// false </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<ul>
 <li>两个核心概念
 
 <ul>
@@ -184,7 +194,7 @@ object.constructor 两个上下文 &hellip;">
 </li>
 </ul>
 </li>
-</ol>
+</ul>
 
 </div>
   
@@ -503,44 +513,62 @@ HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cit
 
   <div class="entry-content"><h2>使用octopress的一下关键性要点</h2>
 
-<h3>创建文章别忘记备份源文件</h3>
+<ul>
+<li><p>执行bundle绑定rake版本</p>
 
-<ol>
-<li><p>bundle exec rake new_post[&#8216;title&#8217;]</p>
+<ul>
+<li>bundle exec rake new_post[&#8216;title&#8217;]
 
 <ul>
 <li>title里大可以包含空格</li>
 </ul>
 </li>
+</ul>
+</li>
+<li><p>本地review</p>
+
+<ul>
+<li>bundle exec rake preview</li>
+</ul>
+</li>
+<li><p>生成与提交</p>
+
+<ul>
+<li><p>bundle exec rake generate</p></li>
+<li><p>bundle exec rake deploy</p></li>
+</ul>
+</li>
+<li><p>创建文章别忘记备份源文件</p>
+
+<ul>
 <li><p>git add  source/_post/new_post</p></li>
 <li><p>git commit -m &#8220;update source : new_post&#8221;</p></li>
-</ol>
+</ul>
+</li>
+<li><p><strong>win</strong>下deploy的一些关键性细节</p>
 
-
-<h3>win下deploy的一些关键性细节</h3>
-
-<ol>
+<ul>
 <li><p>set LC_ALL=zh_CN.UTF-8</p>
 
 <ul>
-<li>多少次跌在这个坑里，win的默认使用gbk编码，console显示的也是gbk编码</li>
+<li>多少次跌在这个坑里，win的默认使用gbk编码，同时console默认显示的也是gbk编码</li>
 </ul>
 </li>
-<li><p>bundle exec rake generate</p></li>
-<li><p>bundle exec rake deploy</p></li>
-</ol>
+<li><p>生成的markdown文件请务必保证是utf-8无bom编码</p>
 
+<ul>
+<li>又是一个坑.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>更新系统享受新特性</p>
 
-<h3>生成的markdown文件请务必保证是utf-8无bom编码</h3>
-
-<pre><code>- 又何尝不是一个坑.
-</code></pre>
-
-<h3>更新系统享受新特性或者fix bug</h3>
-
-<ol>
+<ul>
 <li>git pull octopress master</li>
-</ol>
+</ul>
+</li>
+</ul>
 
 </div>
   
