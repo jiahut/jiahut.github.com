@@ -9,12 +9,7 @@
   <meta name="author" content="zhijia,.zhang">
 
   
-  <meta name="description" content="javascript核心 两个作用域 全局作用域
-闭包作用域 1
-2
-for(var i = 1;i &lt; 100;i++); i逃逸到全局作用域中
-console.log(i); //100 两条原型链 function.prototype
-object.constructor 两个上下文 &hellip;">
+  <meta name="description" content="使用git改善代码编写与测试的过程 挂载待测试代码目录，这要得益于git原生支持共享文件系统 win net share project_1=e:\projects\rails /grant:administrator,full net share project_1 /del net use z &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +61,102 @@ object.constructor 两个上下文 &hellip;">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/03/19/use-git-impove-process-from-coding-to-testing/">Use Git Impove Process From Coding to Testing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-19T22:51:00+08:00" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>使用git改善代码编写与测试的过程</h2>
+
+<ol>
+<li>挂载待测试代码目录，这要得益于git原生支持共享文件系统
+
+<ul>
+<li>win
+
+<ul>
+<li><HOST> <code>net share project_1=e:\projects\rails  /grant:administrator,full</code>
+
+<ul>
+<li><HOST> <code>net share project_1 /del</code></li>
+</ul>
+</li>
+<li><GUEST> <code>net use z: \\&lt;HOST&gt;\project_1</code>
+
+<ul>
+<li><GUEST> <code>net use z: /del</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>linux
+
+<ul>
+<li>mount</li>
+<li>使用ssh是更好的方案</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>fork一份拷贝,checkout到bugXXX分支作修正</p>
+
+<ul>
+<li><GUEST> <code>git clone z: project_1</code></li>
+<li><GUEST> <code>git branch bugXXX</code></li>
+<li><GUEST> <code>git checkout bugXXX</code></li>
+</ul>
+</li>
+<li><p>push你的修正</p>
+
+<ul>
+<li><p><HOST> <code>git config --add receive.denyCurrentBranch ware</code></p>
+
+<ul>
+<li><GUEST><code>cd z: &amp;&amp; git config --add receive.denyCurrentBranch ware</code></li>
+<li><p><HOST> or <code>git config -e</code> or <code>vim .git\config</code> append bellow config</p>
+
+<pre><code>  [receive]  
+  denyCurrentBranch = ware
+</code></pre></li>
+</ul>
+</li>
+<li><p><GUEST> <code>git checkout master</code></p></li>
+<li><GUEST> <code>git merge or rebase bugXXX</code></li>
+<li><GUEST> <code>git push</code></li>
+</ul>
+</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/03/03/javascript-core/">Javascript Core</a></h1>
     
     
@@ -89,93 +180,60 @@ object.constructor 两个上下文 &hellip;">
   </header>
 
 
-  <div class="entry-content"><h3>javascript核心</h3>
+  <div class="entry-content"><h2>javascript核心</h2>
 
-<ul>
-<li>两个作用域
+<ol>
+<li><p>两个作用域</p>
 
 <ul>
 <li>全局作用域</li>
-<li>闭包作用域</li>
+<li><p>闭包作用域</p>
+
+<pre><code>  for(var i = 1;i &lt; 100;i++); i逃逸到全局作用域中  
+  console.log(i); //100
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">);</span> <span class="nx">i</span><span class="err">逃逸到全局作用域中</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span> <span class="c1">//100</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<li><p>两条原型链</p>
 
 <ul>
-<li>两条原型链
-
-<ul>
-<li><em>function</em>.prototype</li>
-<li><em>object</em>.constructor</li>
+<li><func>.prototype</li>
+<li><obj>.constructor</li>
 </ul>
 </li>
-<li>两个上下文
+<li><p>两个上下文</p>
 
 <ul>
 <li>定义上下文</li>
-<li>执行上下文</li>
+<li><p>执行上下文</p>
+
+<pre><code>  (function(){
+      var callbacks = [];
+      for(var i = 1;i &lt; 100;i++){
+          callbacks.push(function(){
+              console.log(i)
+          });
+      }
+      callbacks.forEach(function(e){
+          e.apply()
+      });
+  })()
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">callbacks</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-</span><span class='line'>      <span class="nx">callbacks</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">});</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">callbacks</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-</span><span class='line'>      <span class="nx">e</span><span class="p">.</span><span class="nx">apply</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'><span class="p">})()</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>两套类型系统
+<li><p>两套类型系统</p>
 
 <ul>
 <li>基本类型系统空的概念用 undefined 表示</li>
-<li>对象类型系统空的概念用 null 表示</li>
+<li><p>对象类型系统空的概念用 null 表示</p>
+
+<pre><code>   var str = ""  
+   typeof str === 'string' //true  
+   str instanceof String // false 
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'><span class="k">typeof</span> <span class="nx">str</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span> <span class="c1">//true  </span>
-</span><span class='line'><span class="nx">str</span> <span class="k">instanceof</span> <span class="nb">String</span> <span class="c1">// false </span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<ul>
-<li>两个核心概念
+<li><p>两个核心概念</p>
 
 <ul>
 <li>闭包就是携带部分上下文的函数对象
@@ -194,7 +252,7 @@ object.constructor 两个上下文 &hellip;">
 </li>
 </ul>
 </li>
-</ul>
+</ol>
 
 </div>
   
@@ -233,107 +291,62 @@ object.constructor 两个上下文 &hellip;">
 
   <div class="entry-content"><h3>基于ruby脚本的一些最佳实践</h3>
 
-<ul>
-<li>入口
+<ol>
+<li><p>入口</p>
 
 <ul>
 <li>可选：拥有一个main.rb 文件，作为项目的入口文件</li>
-<li>执行起点：</li>
+<li><p>执行起点：</p>
+
+<pre><code>  if __FILE__ == $0 # alias $PROGRAM_NAME
+    # main point
+  end
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="k">if</span> <span class="nx">__FILE__</span> <span class="o">==</span> <span class="nx">$0</span> <span class="err">#</span> <span class="nx">alias</span> <span class="nx">$PROGRAM_NAME</span>
-</span><span class='line'>    <span class="err">#</span> <span class="nx">main</span> <span class="nx">point</span>
-</span><span class='line'>  <span class="nx">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<li><p>加载路径</p>
 
 <ul>
-<li>加载路径
+<li><p>将当前路径加入ruby的load_path中,以便查找到下面的模块或模型</p>
 
-<ul>
-<li>将当前路径加入ruby的load_path中,以便查找到下面的模块或模型</li>
+<pre><code>  $LOAD_PATH.unshift(File.join(File.dirname(__FILE__))) 
+    unless $LOAD_PATH.include?(File.join(File.dirname(__FILE__)))
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">$LOAD_PATH</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">__FILE__</span><span class="p">)))</span>
-</span><span class='line'>    <span class="nx">unless</span> <span class="nx">$LOAD_PATH</span><span class="p">.</span><span class="nx">include</span><span class="o">?</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">__FILE__</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<li><p>配置文件</p>
 
 <ul>
-<li>配置文件
+<li><p>使用ymal作为配置文件,使用<code>yaml</code>模块来读取</p>
 
-<ul>
-<li>使用ymal作为配置文件,使用<code>yaml</code>模块来读取</li>
+<pre><code>  config = YAML.load_file(File.join(File.dirname(__FILE__), CONFIG_FILE))
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">config</span> <span class="o">=</span> <span class="nx">YAML</span><span class="p">.</span><span class="nx">load_file</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">__FILE__</span><span class="p">),</span> <span class="nx">CONFIG_FILE</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
+<li><p>命令行参数</p>
 
 <ul>
-<li>命令行参数
+<li><p>使用<code>optparse</code>模块处理命令行参数</p>
 
-<ul>
-<li>使用<code>optparse</code>模块处理命令行参数</li>
+<pre><code>   OptionParser.new do |opts|
+        # options[:action] = args
+        opts.on("--open [project_name]","open a sublime projec") do |project_info|
+          options[:open] = project_info
+        end
+
+        opts.on_tail("-h", "--help", "Show this message") do
+          puts opts
+          exit
+        end
+    end.parse!
+
+
+    options.each do |action , argv|
+      SublProject.send action.to_sym,*argv
+    end
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="nx">OptionParser</span><span class="p">.</span><span class="k">new</span> <span class="k">do</span> <span class="o">|</span><span class="nx">opts</span><span class="o">|</span>
-</span><span class='line'>      <span class="err">#</span> <span class="nx">options</span><span class="p">[</span><span class="o">:</span><span class="nx">action</span><span class="p">]</span> <span class="o">=</span> <span class="nx">args</span>
-</span><span class='line'>    <span class="nx">opts</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;--open [project_name]&quot;</span><span class="p">,</span><span class="s2">&quot;open a sublime projec&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="nx">project_info</span><span class="o">|</span>
-</span><span class='line'>      <span class="nx">options</span><span class="p">[</span><span class="o">:</span><span class="nx">open</span><span class="p">]</span> <span class="o">=</span> <span class="nx">project_info</span>
-</span><span class='line'>    <span class="nx">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">opts</span><span class="p">.</span><span class="nx">on_tail</span><span class="p">(</span><span class="s2">&quot;-h&quot;</span><span class="p">,</span> <span class="s2">&quot;--help&quot;</span><span class="p">,</span> <span class="s2">&quot;Show this message&quot;</span><span class="p">)</span> <span class="k">do</span>
-</span><span class='line'>      <span class="nx">puts</span> <span class="nx">opts</span>
-</span><span class='line'>      <span class="nx">exit</span>
-</span><span class='line'>    <span class="nx">end</span>
-</span><span class='line'>  <span class="nx">end</span><span class="p">.</span><span class="nx">parse</span><span class="o">!</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="nx">options</span><span class="p">.</span><span class="nx">each</span> <span class="k">do</span> <span class="o">|</span><span class="nx">action</span> <span class="p">,</span> <span class="nx">argv</span><span class="o">|</span>
-</span><span class='line'>    <span class="nx">SublProject</span><span class="p">.</span><span class="nx">send</span> <span class="nx">action</span><span class="p">.</span><span class="nx">to_sym</span><span class="p">,</span><span class="o">*</span><span class="nx">argv</span>
-</span><span class='line'>  <span class="nx">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
 <li><p>模块</p>
 
 <ul>
@@ -355,7 +368,7 @@ object.constructor 两个上下文 &hellip;">
 <li>可选：把所有模型保存到domain或models文件夹中</li>
 </ul>
 </li>
-</ul>
+</ol>
 
 </div>
   
@@ -440,7 +453,7 @@ object.constructor 两个上下文 &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/09/21/markdown-syntax/">MarkDown:Syntax</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/09/21/markdown-syntax/">MarkDown Syntax</a></h1>
     
     
       <p class="meta">
@@ -465,15 +478,22 @@ object.constructor 两个上下文 &hellip;">
 
   <div class="entry-content"><h3>记录一下Markdown的语法要点</h3>
 
-<p>============================</p>
+<hr />
 
 <ul>
-<li><p>MD的语法全部由标点符号所组成,一般语法格式为标点符号加至少一个空格或tab</p></li>
-<li><p>MD设计用于网络写作语言</p></li>
-<li><p>不在Markdown涵盖范围之外的标签，都可以直接在文件里面用HTML撰写
-只有<strong>区块元素</strong>──比如<code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code>标签，必需在前后加上空白
-HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cite&gt;</code>、<code>&lt;del&gt;</code>则不受限制</p></li>
-<li><p>Markdown语法在HTML<strong>区块标签</strong>中将不会被进行处理</p></li>
+<li><p>MD的语法全部由标点符号所组成,一般语法格式为<strong>标点符号</strong>后加<em>一个空格</em></p></li>
+<li><p>与HTML之间</p>
+
+<ul>
+<li>不在Markdown涵盖范围之外的标签，都可以直接在文件里面用HTML撰写</li>
+<li>只有<strong>区块元素</strong>──比如<code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code>标签，必需在前后加上空白</li>
+<li>HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cite&gt;</code>、<code>&lt;del&gt;</code>则不受限制</li>
+<li>Markdown语法在HTML<strong>区块标签</strong>中将不会被进行处理</li>
+</ul>
+</li>
+<li><p>不要用tab,或者把tab设置为4个空格</p></li>
+<li><p>行尾的两个空格产生换行</p></li>
+<li><p>缩进产生代码块，并结束于空行</p></li>
 </ul>
 
 </div>
@@ -590,6 +610,10 @@ HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cit
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/03/19/use-git-impove-process-from-coding-to-testing/">use git impove process from coding to testing</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/03/03/javascript-core/">javascript core</a>
       </li>
     
@@ -602,11 +626,7 @@ HTML的<strong>区段标签</strong>如<code>&lt;span&gt;</code>、<code>&lt;cit
       </li>
     
       <li class="post">
-        <a href="/blog/2012/09/21/markdown-syntax/">MarkDown:Syntax</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/07/20/octopress-key-point/">octopress key point</a>
+        <a href="/blog/2012/09/21/markdown-syntax/">MarkDown Syntax</a>
       </li>
     
   </ul>

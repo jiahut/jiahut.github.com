@@ -10,9 +10,7 @@
 
   
   <meta name="description" content="基于ruby脚本的一些最佳实践 入口 可选：拥有一个main.rb 文件，作为项目的入口文件
-执行起点： 1
-2
-3 if __FILE__ == $0 # alias $PROGRAM_NAME # main point end 加载路径 将当前路径加入ruby的load_path中, &hellip;">
+执行起点： if __FILE__ == $0 # alias $PROGRAM_NAME # main point end 加载路径 将当前路径加入ruby的load_path中, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,107 +84,62 @@
 
 <div class="entry-content"><h3>基于ruby脚本的一些最佳实践</h3>
 
-<ul>
-<li>入口
+<ol>
+<li><p>入口</p>
 
 <ul>
 <li>可选：拥有一个main.rb 文件，作为项目的入口文件</li>
-<li>执行起点：</li>
+<li><p>执行起点：</p>
+
+<pre><code>  if __FILE__ == $0 # alias $PROGRAM_NAME
+    # main point
+  end
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="k">if</span> <span class="nx">__FILE__</span> <span class="o">==</span> <span class="nx">$0</span> <span class="err">#</span> <span class="nx">alias</span> <span class="nx">$PROGRAM_NAME</span>
-</span><span class='line'>    <span class="err">#</span> <span class="nx">main</span> <span class="nx">point</span>
-</span><span class='line'>  <span class="nx">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<li><p>加载路径</p>
 
 <ul>
-<li>加载路径
+<li><p>将当前路径加入ruby的load_path中,以便查找到下面的模块或模型</p>
 
-<ul>
-<li>将当前路径加入ruby的load_path中,以便查找到下面的模块或模型</li>
+<pre><code>  $LOAD_PATH.unshift(File.join(File.dirname(__FILE__))) 
+    unless $LOAD_PATH.include?(File.join(File.dirname(__FILE__)))
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">$LOAD_PATH</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">__FILE__</span><span class="p">)))</span>
-</span><span class='line'>    <span class="nx">unless</span> <span class="nx">$LOAD_PATH</span><span class="p">.</span><span class="nx">include</span><span class="o">?</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">__FILE__</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<li><p>配置文件</p>
 
 <ul>
-<li>配置文件
+<li><p>使用ymal作为配置文件,使用<code>yaml</code>模块来读取</p>
 
-<ul>
-<li>使用ymal作为配置文件,使用<code>yaml</code>模块来读取</li>
+<pre><code>  config = YAML.load_file(File.join(File.dirname(__FILE__), CONFIG_FILE))
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">config</span> <span class="o">=</span> <span class="nx">YAML</span><span class="p">.</span><span class="nx">load_file</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">File</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">__FILE__</span><span class="p">),</span> <span class="nx">CONFIG_FILE</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
+<li><p>命令行参数</p>
 
 <ul>
-<li>命令行参数
+<li><p>使用<code>optparse</code>模块处理命令行参数</p>
 
-<ul>
-<li>使用<code>optparse</code>模块处理命令行参数</li>
+<pre><code>   OptionParser.new do |opts|
+        # options[:action] = args
+        opts.on("--open [project_name]","open a sublime projec") do |project_info|
+          options[:open] = project_info
+        end
+
+        opts.on_tail("-h", "--help", "Show this message") do
+          puts opts
+          exit
+        end
+    end.parse!
+
+
+    options.each do |action , argv|
+      SublProject.send action.to_sym,*argv
+    end
+</code></pre></li>
 </ul>
 </li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="nx">OptionParser</span><span class="p">.</span><span class="k">new</span> <span class="k">do</span> <span class="o">|</span><span class="nx">opts</span><span class="o">|</span>
-</span><span class='line'>      <span class="err">#</span> <span class="nx">options</span><span class="p">[</span><span class="o">:</span><span class="nx">action</span><span class="p">]</span> <span class="o">=</span> <span class="nx">args</span>
-</span><span class='line'>    <span class="nx">opts</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;--open [project_name]&quot;</span><span class="p">,</span><span class="s2">&quot;open a sublime projec&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="nx">project_info</span><span class="o">|</span>
-</span><span class='line'>      <span class="nx">options</span><span class="p">[</span><span class="o">:</span><span class="nx">open</span><span class="p">]</span> <span class="o">=</span> <span class="nx">project_info</span>
-</span><span class='line'>    <span class="nx">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">opts</span><span class="p">.</span><span class="nx">on_tail</span><span class="p">(</span><span class="s2">&quot;-h&quot;</span><span class="p">,</span> <span class="s2">&quot;--help&quot;</span><span class="p">,</span> <span class="s2">&quot;Show this message&quot;</span><span class="p">)</span> <span class="k">do</span>
-</span><span class='line'>      <span class="nx">puts</span> <span class="nx">opts</span>
-</span><span class='line'>      <span class="nx">exit</span>
-</span><span class='line'>    <span class="nx">end</span>
-</span><span class='line'>  <span class="nx">end</span><span class="p">.</span><span class="nx">parse</span><span class="o">!</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="nx">options</span><span class="p">.</span><span class="nx">each</span> <span class="k">do</span> <span class="o">|</span><span class="nx">action</span> <span class="p">,</span> <span class="nx">argv</span><span class="o">|</span>
-</span><span class='line'>    <span class="nx">SublProject</span><span class="p">.</span><span class="nx">send</span> <span class="nx">action</span><span class="p">.</span><span class="nx">to_sym</span><span class="p">,</span><span class="o">*</span><span class="nx">argv</span>
-</span><span class='line'>  <span class="nx">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
 <li><p>模块</p>
 
 <ul>
@@ -208,7 +161,7 @@
 <li>可选：把所有模型保存到domain或models文件夹中</li>
 </ul>
 </li>
-</ul>
+</ol>
 
 </div>
 
@@ -267,6 +220,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/03/19/use-git-impove-process-from-coding-to-testing/">use git impove process from coding to testing</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/03/03/javascript-core/">javascript core</a>
       </li>
     
@@ -279,11 +236,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2012/09/21/markdown-syntax/">MarkDown:Syntax</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/07/20/octopress-key-point/">octopress key point</a>
+        <a href="/blog/2012/09/21/markdown-syntax/">MarkDown Syntax</a>
       </li>
     
   </ul>

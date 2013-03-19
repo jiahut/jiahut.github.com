@@ -5,14 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>javascript core - jazz's blog</title>
+  <title>use git impove process from coding to testing - jazz's blog</title>
   <meta name="author" content="zhijia,.zhang">
 
   
-  <meta name="description" content="javascript核心 两个作用域 全局作用域
-闭包作用域 for(var i = 1;i &lt; 100;i++); i逃逸到全局作用域中 console.log(i); //100 两条原型链 .prototype
-.constructor 两个上下文 定义上下文
-执行上下文 ( &hellip;">
+  <meta name="description" content="使用git改善代码编写与测试的过程 挂载待测试代码目录，这要得益于git原生支持共享文件系统 win net share project_1=e:\projects\rails /grant:administrator,full net share project_1 /del net use z &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jiahut.github.com/blog/2013/03/03/javascript-core/">
+  <link rel="canonical" href="http://jiahut.github.com/blog/2013/03/19/use-git-impove-process-from-coding-to-testing/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -61,7 +58,7 @@
   
   <header>
     
-      <h1 class="entry-title">Javascript Core</h1>
+      <h1 class="entry-title">Use Git Impove Process From Coding to Testing</h1>
     
     
       <p class="meta">
@@ -77,83 +74,70 @@
   
 
 
-<time datetime="2013-03-03T13:27:00+08:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2013</time>
+<time datetime="2013-03-19T22:51:00+08:00" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>javascript核心</h2>
+<div class="entry-content"><h2>使用git改善代码编写与测试的过程</h2>
 
 <ol>
-<li><p>两个作用域</p>
+<li>挂载待测试代码目录，这要得益于git原生支持共享文件系统
 
 <ul>
-<li>全局作用域</li>
-<li><p>闭包作用域</p>
+<li>win
 
-<pre><code>  for(var i = 1;i &lt; 100;i++); i逃逸到全局作用域中  
-  console.log(i); //100
+<ul>
+<li><HOST> <code>net share project_1=e:\projects\rails  /grant:administrator,full</code>
+
+<ul>
+<li><HOST> <code>net share project_1 /del</code></li>
+</ul>
+</li>
+<li><GUEST> <code>net use z: \\&lt;HOST&gt;\project_1</code>
+
+<ul>
+<li><GUEST> <code>net use z: /del</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>linux
+
+<ul>
+<li>mount</li>
+<li>使用ssh是更好的方案</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>fork一份拷贝,checkout到bugXXX分支作修正</p>
+
+<ul>
+<li><GUEST> <code>git clone z: project_1</code></li>
+<li><GUEST> <code>git branch bugXXX</code></li>
+<li><GUEST> <code>git checkout bugXXX</code></li>
+</ul>
+</li>
+<li><p>push你的修正</p>
+
+<ul>
+<li><p><HOST> <code>git config --add receive.denyCurrentBranch ware</code></p>
+
+<ul>
+<li><GUEST><code>cd z: &amp;&amp; git config --add receive.denyCurrentBranch ware</code></li>
+<li><p><HOST> or <code>git config -e</code> or <code>vim .git\config</code> append bellow config</p>
+
+<pre><code>  [receive]  
+  denyCurrentBranch = ware
 </code></pre></li>
 </ul>
 </li>
-<li><p>两条原型链</p>
-
-<ul>
-<li><func>.prototype</li>
-<li><obj>.constructor</li>
-</ul>
-</li>
-<li><p>两个上下文</p>
-
-<ul>
-<li>定义上下文</li>
-<li><p>执行上下文</p>
-
-<pre><code>  (function(){
-      var callbacks = [];
-      for(var i = 1;i &lt; 100;i++){
-          callbacks.push(function(){
-              console.log(i)
-          });
-      }
-      callbacks.forEach(function(e){
-          e.apply()
-      });
-  })()
-</code></pre></li>
-</ul>
-</li>
-<li><p>两套类型系统</p>
-
-<ul>
-<li>基本类型系统空的概念用 undefined 表示</li>
-<li><p>对象类型系统空的概念用 null 表示</p>
-
-<pre><code>   var str = ""  
-   typeof str === 'string' //true  
-   str instanceof String // false 
-</code></pre></li>
-</ul>
-</li>
-<li><p>两个核心概念</p>
-
-<ul>
-<li>闭包就是携带部分上下文的函数对象
-
-<ul>
-<li>内部函数中的变量优先在闭包中执行变量查找，然后上一次&#8230;</li>
-</ul>
-</li>
-<li>上下文对象就是函数执行的环境
-
-<ul>
-<li>当前上下文为this</li>
-<li>浏览器全局上下文为windows</li>
-<li>nodejs全局上下文为global</li>
-</ul>
-</li>
+<li><p><GUEST> <code>git checkout master</code></p></li>
+<li><GUEST> <code>git merge or rebase bugXXX</code></li>
+<li><GUEST> <code>git push</code></li>
 </ul>
 </li>
 </ol>
@@ -180,7 +164,7 @@
   
 
 
-<time datetime="2013-03-03T13:27:00+08:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2013</time>
+<time datetime="2013-03-19T22:51:00+08:00" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time>
       
 
 
@@ -188,7 +172,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jiahut.github.com/blog/2013/03/03/javascript-core/" data-via="" data-counturl="http://jiahut.github.com/blog/2013/03/03/javascript-core/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jiahut.github.com/blog/2013/03/19/use-git-impove-process-from-coding-to-testing/" data-via="" data-counturl="http://jiahut.github.com/blog/2013/03/19/use-git-impove-process-from-coding-to-testing/" >Tweet</a>
   
   
   
@@ -197,10 +181,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/12/05/ruby-as-script-in-action/" title="Previous Post: ruby as script in action">&laquo; ruby as script in action</a>
+        <a class="basic-alignment left" href="/blog/2013/03/03/javascript-core/" title="Previous Post: javascript core">&laquo; javascript core</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/03/19/use-git-impove-process-from-coding-to-testing/" title="Next Post: use git impove process from coding to testing">use git impove process from coding to testing &raquo;</a>
       
     </p>
   </footer>
