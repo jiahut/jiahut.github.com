@@ -9,7 +9,8 @@
   <meta name="author" content="zhijia,.zhang">
 
   
-  <meta name="description" content="使用git改善代码编写与测试的过程 挂载待测试代码目录，这要得益于git原生支持共享文件系统 win net share project_1=e:\projects\rails /grant:administrator,full net share project_1 /del net use z &hellip;">
+  <meta name="description" content="使用git改善代码编写与测试的过程 挂载待测试代码目录，这要得益于git原生支持共享文件系统 win &lt;HOST> net share project_1=e:\projects\rails /grant:administrator,full 如果文件夹路径中包含空格，需用括号包含起来
+& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,22 +85,23 @@
 <div class="entry-content"><h2>使用git改善代码编写与测试的过程</h2>
 
 <ol>
-<li>挂载待测试代码目录，这要得益于git原生支持共享文件系统
+<li><p>挂载待测试代码目录，这要得益于git原生支持共享文件系统</p>
 
 <ul>
 <li>win
 
 <ul>
-<li><HOST> <code>net share project_1=e:\projects\rails  /grant:administrator,full</code>
+<li>&lt;HOST> <code>net share project_1=e:\projects\rails  /grant:administrator,full</code>
 
 <ul>
-<li><HOST> <code>net share project_1 /del</code></li>
+<li> 如果文件夹路径中包含空格，需用括号包含起来</li>
+<li>&lt;HOST> <code>net share project_1 /del</code></li>
 </ul>
 </li>
-<li><GUEST> <code>net use z: \\&lt;HOST&gt;\project_1</code>
+<li>&lt;GUEST> <code>net use z: \\&lt;HOST&gt;\project_1</code>
 
 <ul>
-<li><GUEST> <code>net use z: /del</code></li>
+<li>&lt;GUEST> <code>net use z: /del</code></li>
 </ul>
 </li>
 </ul>
@@ -116,28 +118,39 @@
 <li><p>fork一份拷贝,checkout到bugXXX分支作修正</p>
 
 <ul>
-<li><GUEST> <code>git clone z: project_1</code></li>
-<li><GUEST> <code>git branch bugXXX</code></li>
-<li><GUEST> <code>git checkout bugXXX</code></li>
+<li>&lt;GUEST> <code>git clone z: project_1</code></li>
+<li>&lt;GUEST> <code>git branch bugXX</code></li>
+<li>&lt;GUEST> <code>git checkout bugXX</code></li>
 </ul>
 </li>
 <li><p>push你的修正</p>
 
 <ul>
-<li><p><HOST> <code>git config --add receive.denyCurrentBranch ware</code></p>
+<li><p>如果你直接推送到master会报错，下面方法可以解决，但是最好不要这样做
+&lt;HOST> <code>git config --add receive.denyCurrentBranch warn</code></p>
 
 <ul>
-<li><GUEST><code>cd z: &amp;&amp; git config --add receive.denyCurrentBranch ware</code></li>
-<li><p><HOST> or <code>git config -e</code> or <code>vim .git\config</code> append bellow config</p>
+<li>or &lt;HOST> <code>git config --add receive.denyCurrentBranch ignore</code></li>
+<li><p>or &lt;HOST> <code>git config -e</code> or <code>vim .git\config</code> append bellow config</p>
 
 <pre><code>  [receive]  
-  denyCurrentBranch = ware
+  denyCurrentBranch = warn
 </code></pre></li>
 </ul>
 </li>
-<li><p><GUEST> <code>git checkout master</code></p></li>
-<li><GUEST> <code>git merge or rebase bugXXX</code></li>
-<li><GUEST> <code>git push</code></li>
+<li><p>&lt;GUEST> <code>git push origin bugXX</code></p>
+
+<ul>
+<li>推送之前，请确保请确保HOST的工作树不处于你正推送的分支上，否则会遇见上面中提到的问题</li>
+<li>一个简化的模型是，HOST始终在master分支，GUEST始终在你修正的分支中推送补丁(ps 你不应该推送你已经合并的分支)，然后HOST中去应用你的补丁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>应用你的补丁
+
+<ul>
+<li>&lt;HOST> <code>git merge bugXX</code> or <code>git rebase bugXX</code></li>
 </ul>
 </li>
 </ol>
