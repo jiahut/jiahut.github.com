@@ -4,7 +4,7 @@
   <title><![CDATA[jazz's blog]]></title>
   <link href="http://jiahut.github.com/atom.xml" rel="self"/>
   <link href="http://jiahut.github.com/"/>
-  <updated>2013-03-20T20:54:54+08:00</updated>
+  <updated>2013-03-21T21:38:58+08:00</updated>
   <id>http://jiahut.github.com/</id>
   <author>
     <name><![CDATA[zhijia,.zhang]]></name>
@@ -116,8 +116,8 @@
 <li><p>两条原型链</p>
 
 <ul>
-<li><func>.prototype</li>
-<li><obj>.constructor</li>
+<li>&lt;function>.prototype</li>
+<li>&lt;object>.constructor</li>
 </ul>
 </li>
 <li><p>两个上下文</p>
@@ -330,8 +330,9 @@
 </ul>
 </li>
 <li><p>不要用tab,或者把tab设置为4个空格</p></li>
-<li><p>行尾的两个空格产生换行</p></li>
+<li><p>行尾两个空格产生换行</p></li>
 <li><p>缩进产生代码块，并结束于空行</p></li>
+<li><p>如用到语法中的标点符号的时前面加反斜杠转义“/”</p></li>
 </ul>
 
 ]]></content>
