@@ -9,8 +9,8 @@
   <meta name="author" content="zhijia,.zhang">
 
   
-  <meta name="description" content="使用git改善代码编写与测试的过程 挂载待测试代码目录，这要得益于git原生支持共享文件系统 win &lt;HOST> net share project_1=e:\projects\rails /grant:administrator,full 如果文件夹路径中包含空格，需用括号包含起来
-& &hellip;">
+  <meta name="description" content="Java平台的JSON处理的API的展示 JSON是一种轻量级数据交换格式,rails4的 respond_to do |format|拿掉xml以json取代,2013 了，再拿xml当default API就不是有一点的out了
+JSR-353的参考实现JSON- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -56,6 +56,116 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/07/jsonp-api-demo-in-java/">Jsonp Api Demo in Java</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-07T21:16:00+08:00" pubdate data-updated="true">May 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>  Java平台的JSON处理的API的展示</h1>
+
+<ol>
+<li><p>JSON是一种轻量级数据交换格式,rails4的 <code>respond_to do |format|</code>拿掉xml以json取代,2013 了，再拿xml当default API就不是有一点的out了</p></li>
+<li><p>JSR-353的参考实现<a href="https://java.net/projects/jsonp">JSON-P</a>将作为即将发布的JavaEE 7的一部分</p></li>
+<li><p>以下代码演示JSONP的读写API</p>
+
+<pre><code> import java.io.*;
+
+ import javax.json.*;
+ import javax.json.stream.*;
+ import javax.json.stream.JsonParser.*;
+
+ public class JsonDemo {
+     private String address = "./json_demo.js";
+
+     public static void main(String[] args) throws Exception {
+         JsonDemo demo = new JsonDemo();
+         demo.write();
+         demo.read();
+     }
+
+     public void write() throws Exception{
+         JsonBuilderFactory factory = Json.createBuilderFactory(null);
+         JsonArray jsonArray = factory.createArrayBuilder()
+             .add(factory.createObjectBuilder()
+                 .add("username", "zhijia,.zhang")
+                 .add("email", "jiahut@gmail.com"))
+             .add(factory.createObjectBuilder()
+                 .add("username", "lishi")
+                 .add("email", "lishi@demo.com"))
+             .build();
+         try (JsonWriter jsonWriter = Json.createWriter(new FileWriter(address))) {
+               jsonWriter.writeArray(jsonArray);
+         }
+     }
+
+     public void read() throws Exception{
+         JsonParserFactory factory = Json.createParserFactory(null);
+         StringBuffer stb = new StringBuffer();
+         String str = null;
+
+         try(BufferedReader rd = new BufferedReader(new FileReader(address))){
+             while((str = rd.readLine()) != null){
+                 stb.append(str);
+             }
+         }
+
+         JsonParser parser = factory.createParser(new StringReader(stb.toString()));
+         while (parser.hasNext()) {
+           Event event = parser.next();
+           switch (event) {
+             case KEY_NAME: {
+               System.out.print(parser.getString() + "="); break;
+             }
+             case VALUE_STRING: {
+               System.out.println(parser.getString()); break;
+             }
+           } // end switch
+         }// end while
+     }
+ }
+</code></pre></li>
+<li><p>命令行下编译与运行</p>
+
+<ul>
+<li>请先<a href="https://java.net/projects/jsonp/downloads/download/ri/javax.json-ri-1.0-fab.zip">下载jsonp的jar</a>到当前目录</li>
+<li><p>请使用java7或以上版本</p></li>
+<li><p>编译 <code>javac -cp .;javax.json-1.0-fab.jar JsonDemo.java</code></p></li>
+<li><p>运行 <code>java -cp .;javax.json-1.0-fab.jar JsonDemo</code></p></li>
+<li><p>当然你也可以打开产生的json_demo.js 文件看看生成的内容</p></li>
+</ul>
+</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -624,6 +734,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/07/jsonp-api-demo-in-java/">jsonp api demo in java</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/03/19/use-git-impove-process-from-coding-to-testing/">use git impove process from coding to testing</a>
       </li>
     
@@ -637,10 +751,6 @@
     
       <li class="post">
         <a href="/blog/2012/10/28/python-module-vs-package/">Python module vs. package</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/09/21/markdown-syntax/">MarkDown Syntax</a>
       </li>
     
   </ul>

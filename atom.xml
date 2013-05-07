@@ -4,7 +4,7 @@
   <title><![CDATA[jazz's blog]]></title>
   <link href="http://jiahut.github.com/atom.xml" rel="self"/>
   <link href="http://jiahut.github.com/"/>
-  <updated>2013-03-21T21:38:58+08:00</updated>
+  <updated>2013-05-07T21:41:45+08:00</updated>
   <id>http://jiahut.github.com/</id>
   <author>
     <name><![CDATA[zhijia,.zhang]]></name>
@@ -12,6 +12,89 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[jsonp api demo in java]]></title>
+    <link href="http://jiahut.github.com/blog/2013/05/07/jsonp-api-demo-in-java/"/>
+    <updated>2013-05-07T21:16:00+08:00</updated>
+    <id>http://jiahut.github.com/blog/2013/05/07/jsonp-api-demo-in-java</id>
+    <content type="html"><![CDATA[<h1>  Java平台的JSON处理的API的展示</h1>
+
+<ol>
+<li><p>JSON是一种轻量级数据交换格式,rails4的 <code>respond_to do |format|</code>拿掉xml以json取代,2013 了，再拿xml当default API就不是有一点的out了</p></li>
+<li><p>JSR-353的参考实现<a href="https://java.net/projects/jsonp">JSON-P</a>将作为即将发布的JavaEE 7的一部分</p></li>
+<li><p>以下代码演示JSONP的读写API</p>
+
+<pre><code> import java.io.*;
+
+ import javax.json.*;
+ import javax.json.stream.*;
+ import javax.json.stream.JsonParser.*;
+
+ public class JsonDemo {
+     private String address = "./json_demo.js";
+
+     public static void main(String[] args) throws Exception {
+         JsonDemo demo = new JsonDemo();
+         demo.write();
+         demo.read();
+     }
+
+     public void write() throws Exception{
+         JsonBuilderFactory factory = Json.createBuilderFactory(null);
+         JsonArray jsonArray = factory.createArrayBuilder()
+             .add(factory.createObjectBuilder()
+                 .add("username", "zhijia,.zhang")
+                 .add("email", "jiahut@gmail.com"))
+             .add(factory.createObjectBuilder()
+                 .add("username", "lishi")
+                 .add("email", "lishi@demo.com"))
+             .build();
+         try (JsonWriter jsonWriter = Json.createWriter(new FileWriter(address))) {
+               jsonWriter.writeArray(jsonArray);
+         }
+     }
+
+     public void read() throws Exception{
+         JsonParserFactory factory = Json.createParserFactory(null);
+         StringBuffer stb = new StringBuffer();
+         String str = null;
+
+         try(BufferedReader rd = new BufferedReader(new FileReader(address))){
+             while((str = rd.readLine()) != null){
+                 stb.append(str);
+             }
+         }
+
+         JsonParser parser = factory.createParser(new StringReader(stb.toString()));
+         while (parser.hasNext()) {
+           Event event = parser.next();
+           switch (event) {
+             case KEY_NAME: {
+               System.out.print(parser.getString() + "="); break;
+             }
+             case VALUE_STRING: {
+               System.out.println(parser.getString()); break;
+             }
+           } // end switch
+         }// end while
+     }
+ }
+</code></pre></li>
+<li><p>命令行下编译与运行</p>
+
+<ul>
+<li>请先<a href="https://java.net/projects/jsonp/downloads/download/ri/javax.json-ri-1.0-fab.zip">下载jsonp的jar</a>到当前目录</li>
+<li><p>请使用java7或以上版本</p></li>
+<li><p>编译 <code>javac -cp .;javax.json-1.0-fab.jar JsonDemo.java</code></p></li>
+<li><p>运行 <code>java -cp .;javax.json-1.0-fab.jar JsonDemo</code></p></li>
+<li><p>当然你也可以打开产生的json_demo.js 文件看看生成的内容</p></li>
+</ul>
+</li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[use git impove process from coding to testing]]></title>
