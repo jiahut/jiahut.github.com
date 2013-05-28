@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>ruby as script in action - jazz's blog</title>
+  <title>good principle of programming - jazz's blog</title>
   <meta name="author" content="zhijia,.zhang">
 
   
-  <meta name="description" content="基于ruby脚本的一些最佳实践 入口 可选：拥有一个main.rb 文件，作为项目的入口文件
-执行起点： if __FILE__ == $0 # alias $PROGRAM_NAME # main point end 加载路径 将当前路径加入ruby的load_path中, &hellip;">
+  <meta name="description" content="好的编程原则 *. 软件是一门工程学，其实也是一门工艺学，一个好的软件产品也是一件艺术品，构建这件艺术品有很多好的原则，下面来源于我的工作学习中总结。 *. 很多时候针对一个未知的问题，用已知的经验或知识去理解它，会存在正向或负向的偏差， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jiahut.github.com/blog/2012/12/05/ruby-as-script-in-action/">
+  <link rel="canonical" href="http://jiahut.github.com/blog/2013/05/28/good-principle-of-programming/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -59,7 +58,7 @@
   
   <header>
     
-      <h1 class="entry-title">Ruby as Script in Action</h1>
+      <h1 class="entry-title">Good Principle of Programming</h1>
     
     
       <p class="meta">
@@ -75,90 +74,63 @@
   
 
 
-<time datetime="2012-12-05T22:14:00+08:00" pubdate data-updated="true">Dec 5<span>th</span>, 2012</time>
+<time datetime="2013-05-28T19:18:00+08:00" pubdate data-updated="true">May 28<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h3>基于ruby脚本的一些最佳实践</h3>
+<div class="entry-content"><h1> 好的编程原则</h1>
+
+<p>*. 软件是一门工程学，其实也是一门工艺学，一个好的软件产品也是一件艺术品，构建这件艺术品有很多好的原则，下面来源于我的工作学习中总结。</p>
+
+<p>*. 很多时候针对一个未知的问题，用已知的经验或知识去理解它，会存在正向或负向的偏差，甚至有时候这种偏差很大我们应该在不断的尝试中去修正偏差或发觉新的见解。</p>
+
+<p>*. 我们享受对象带来的好处，但是往往我们却忽视了去维护对象的状态。一个对象的内部状态（字段）不应该超过3个</p>
+
+<p>*. 一个内部状态应该只有一个引起改变它的原因。</p>
+
+<p>*. 可测试性与松耦合，高内聚，无冗余和恰当的封装存在着正向的关系。</p>
 
 <ol>
-<li><p>入口</p>
+<li><p>意图导向编程</p>
 
 <ul>
-<li>可选：拥有一个main.rb 文件，作为项目的入口文件</li>
-<li><p>执行起点：</p>
-
-<pre><code>  if __FILE__ == $0 # alias $PROGRAM_NAME
-    # main point
-  end
-</code></pre></li>
+<li>flow</li>
+<li>design</li>
+<li>接口</li>
 </ul>
 </li>
-<li><p>加载路径</p>
+<li><p>契约式编程</p>
 
 <ul>
-<li><p>将当前路径加入ruby的load_path中,以便查找到下面的模块或模型</p>
-
-<pre><code>  $LOAD_PATH.unshift(File.join(File.dirname(__FILE__))) 
-    unless $LOAD_PATH.include?(File.join(File.dirname(__FILE__)))
-</code></pre></li>
+<li>契约就是“检查是否规范”；</li>
+<li>契约构成程序规格说明的一部分，只不过该说明从文档挪到了代码中;</li>
+<li>契约是一组结果为真的表达式。如若不然，契约就被违反。那按照定义，程序中就存在bug;</li>
 </ul>
 </li>
-<li><p>配置文件</p>
+<li><p>交互式编程</p>
 
 <ul>
-<li><p>使用ymal作为配置文件,使用<code>yaml</code>模块来读取</p>
-
-<pre><code>  config = YAML.load_file(File.join(File.dirname(__FILE__), CONFIG_FILE))
-</code></pre></li>
+<li>give me a shell</li>
+<li>repl</li>
 </ul>
 </li>
-<li><p>命令行参数</p>
+<li><p>原型开发</p>
 
 <ul>
-<li><p>使用<code>optparse</code>模块处理命令行参数</p>
-
-<pre><code>   OptionParser.new do |opts|
-        # options[:action] = args
-        opts.on("--open [project_name]","open a sublime projec") do |project_info|
-          options[:open] = project_info
-        end
-
-        opts.on_tail("-h", "--help", "Show this message") do
-          puts opts
-          exit
-        end
-    end.parse!
-
-
-    options.each do |action , argv|
-      SublProject.send action.to_sym,*argv
-    end
-</code></pre></li>
+<li>not just a demo</li>
+<li>fork</li>
+<li>code refactoring</li>
+<li>just a bit change one by one</li>
 </ul>
 </li>
-<li><p>模块</p>
+<li><p>测试先行</p>
 
 <ul>
-<li>一个模块只应该解决一个核心问题。比如解析特定格式的文件，返回解析后的模型数据
-
-<ul>
-<li>可选： 以功能命名相应的文件夹，如parser</li>
-</ul>
-</li>
-<li>模块的接口设计为返回一个模型的实例</li>
-</ul>
-</li>
-<li><p>模型</p>
-
-<ul>
-<li>项目需求分析阶段，抽象出的核心概念都应该作为一个模型</li>
-<li>模型应该采用rails的充血模型设计，模型之间能导航，但不需持久化</li>
-<li>当代码在响应需求变化时显得复杂，这时候应该抽象出一个模型，在业务中插入一个对象来应对业务的变化。</li>
-<li>可选：把所有模型保存到domain或models文件夹中</li>
+<li>测试用例的分析法，使用测试来确定软件需包含的功能</li>
+<li>使用测试来完成设计</li>
 </ul>
 </li>
 </ol>
@@ -185,7 +157,7 @@
   
 
 
-<time datetime="2012-12-05T22:14:00+08:00" pubdate data-updated="true">Dec 5<span>th</span>, 2012</time>
+<time datetime="2013-05-28T19:18:00+08:00" pubdate data-updated="true">May 28<span>th</span>, 2013</time>
       
 
 
@@ -193,7 +165,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jiahut.github.com/blog/2012/12/05/ruby-as-script-in-action/" data-via="" data-counturl="http://jiahut.github.com/blog/2012/12/05/ruby-as-script-in-action/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jiahut.github.com/blog/2013/05/28/good-principle-of-programming/" data-via="" data-counturl="http://jiahut.github.com/blog/2013/05/28/good-principle-of-programming/" >Tweet</a>
   
   
   
@@ -202,10 +174,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/10/28/python-module-vs-package/" title="Previous Post: Python module vs. package">&laquo; Python module vs. package</a>
+        <a class="basic-alignment left" href="/blog/2013/05/07/jsonp-api-demo-in-java/" title="Previous Post: jsonp api demo in java">&laquo; jsonp api demo in java</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/03/03/javascript-core/" title="Next Post: javascript core">javascript core &raquo;</a>
       
     </p>
   </footer>

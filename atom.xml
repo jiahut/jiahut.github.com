@@ -4,7 +4,7 @@
   <title><![CDATA[jazz's blog]]></title>
   <link href="http://jiahut.github.com/atom.xml" rel="self"/>
   <link href="http://jiahut.github.com/"/>
-  <updated>2013-05-07T21:41:45+08:00</updated>
+  <updated>2013-05-28T19:29:51+08:00</updated>
   <id>http://jiahut.github.com/</id>
   <author>
     <name><![CDATA[zhijia,.zhang]]></name>
@@ -14,11 +14,73 @@
 
   
   <entry>
+    <title type="html"><![CDATA[good principle of programming]]></title>
+    <link href="http://jiahut.github.com/blog/2013/05/28/good-principle-of-programming/"/>
+    <updated>2013-05-28T19:18:00+08:00</updated>
+    <id>http://jiahut.github.com/blog/2013/05/28/good-principle-of-programming</id>
+    <content type="html"><![CDATA[<h1> 好的编程原则</h1>
+
+<p>*. 软件是一门工程学，其实也是一门工艺学，一个好的软件产品也是一件艺术品，构建这件艺术品有很多好的原则，下面来源于我的工作学习中总结。</p>
+
+<p>*. 很多时候针对一个未知的问题，用已知的经验或知识去理解它，会存在正向或负向的偏差，甚至有时候这种偏差很大我们应该在不断的尝试中去修正偏差或发觉新的见解。</p>
+
+<p>*. 我们享受对象带来的好处，但是往往我们却忽视了去维护对象的状态。一个对象的内部状态（字段）不应该超过3个</p>
+
+<p>*. 一个内部状态应该只有一个引起改变它的原因。</p>
+
+<p>*. 可测试性与松耦合，高内聚，无冗余和恰当的封装存在着正向的关系。</p>
+
+<ol>
+<li><p>意图导向编程</p>
+
+<ul>
+<li>flow</li>
+<li>design</li>
+<li>接口</li>
+</ul>
+</li>
+<li><p>契约式编程</p>
+
+<ul>
+<li>契约就是“检查是否规范”；</li>
+<li>契约构成程序规格说明的一部分，只不过该说明从文档挪到了代码中;</li>
+<li>契约是一组结果为真的表达式。如若不然，契约就被违反。那按照定义，程序中就存在bug;</li>
+</ul>
+</li>
+<li><p>交互式编程</p>
+
+<ul>
+<li>give me a shell</li>
+<li>repl</li>
+</ul>
+</li>
+<li><p>原型开发</p>
+
+<ul>
+<li>not just a demo</li>
+<li>fork</li>
+<li>code refactoring</li>
+<li>just a bit change one by one</li>
+</ul>
+</li>
+<li><p>测试先行</p>
+
+<ul>
+<li>测试用例的分析法，使用测试来确定软件需包含的功能</li>
+<li>使用测试来完成设计</li>
+</ul>
+</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[jsonp api demo in java]]></title>
     <link href="http://jiahut.github.com/blog/2013/05/07/jsonp-api-demo-in-java/"/>
     <updated>2013-05-07T21:16:00+08:00</updated>
     <id>http://jiahut.github.com/blog/2013/05/07/jsonp-api-demo-in-java</id>
-    <content type="html"><![CDATA[<h1>  Java平台的JSON处理的API的展示</h1>
+    <content type="html"><![CDATA[<h1>  Java平台的JSON处理的API的演示</h1>
 
 <ol>
 <li><p>JSON是一种轻量级数据交换格式,rails4的 <code>respond_to do |format|</code>拿掉xml以json取代,2013 了，再拿xml当default API就不是有一点的out了</p></li>
@@ -446,11 +508,17 @@
 <li>bundle exec rake preview</li>
 </ul>
 </li>
-<li><p>生成与提交</p>
+<li><p>生成</p>
 
 <ul>
-<li><p>bundle exec rake generate</p></li>
-<li><p>bundle exec rake deploy</p></li>
+<li>bundle exec rake generate</li>
+</ul>
+</li>
+<li><p>提交</p>
+
+<ul>
+<li>管理员模式的命令行和cygwin下的git</li>
+<li>bundle exec rake deploy</li>
 </ul>
 </li>
 <li><p>创建文章别忘记备份源文件</p>
